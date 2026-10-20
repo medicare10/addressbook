@@ -18,8 +18,6 @@ function ProtectedRoute({ children }) {
   return children
 }
 
-const NO_MATCHES = 'No names match that search.'
-
 function mapHrefFor(contact) {
   if (contact.mapLink) return contact.mapLink
   if (contact.address) {
@@ -593,9 +591,75 @@ function Home() {
         </div>
       )}
 
-      {status === 'ready' && count === 0 && (
-        <div className="contact-state empty">
-          <p>{isSearching ? NO_MATCHES : 'Your book is empty.'}</p>
+      {status === 'ready' && count === 0 && isSearching && (
+        <div className="contact-state empty-state">
+          <div className="empty-art" aria-hidden="true">
+            <svg viewBox="0 0 120 96" width="120" height="96" role="presentation">
+              <g fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round">
+                {/* card stack */}
+                <rect className="art-card art-card-3" x="30" y="26" width="60" height="44" rx="4" strokeWidth="1.6" />
+                <rect className="art-card art-card-2" x="25" y="22" width="70" height="48" rx="4" strokeWidth="1.6" />
+                <rect className="art-card art-card-1" x="20" y="18" width="80" height="52" rx="4" strokeWidth="1.8" />
+                {/* index lines on the front card */}
+                <path className="art-line" d="M32 34h34" strokeWidth="2" />
+                <path className="art-line" d="M32 42h24" strokeWidth="2" />
+                <path className="art-line" d="M32 50h30" strokeWidth="2" />
+                {/* magnifier */}
+                <circle className="art-glass" cx="78" cy="60" r="13" strokeWidth="2.4" />
+                <path className="art-glass" d="M88 70l9 9" strokeWidth="3" />
+              </g>
+            </svg>
+          </div>
+          <div className="empty-copy">
+            <p className="empty-title">Nothing matches “{query.trim()}”</p>
+            <p className="empty-sub">
+              Check the spelling, or search by phone, email, or address instead.
+            </p>
+            <button type="button" className="empty-action" onClick={() => setQuery('')}>
+              Clear search
+            </button>
+          </div>
+        </div>
+      )}
+
+      {status === 'ready' && count === 0 && !isSearching && (
+        <div className="contact-state empty-state">
+          <div className="empty-art" aria-hidden="true">
+            <svg viewBox="0 0 120 96" width="120" height="96" role="presentation">
+              <g fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round">
+                {/* open empty book */}
+                <path className="art-cover" d="M14 30c14-6 30-6 44 2v46c-14-8-30-8-44-2z" strokeWidth="1.8" />
+                <path className="art-cover" d="M106 30c-14-6-30-6-44 2v46c14-8 30-8 44-2z" strokeWidth="1.8" />
+                <path className="art-spine" d="M60 32v46" strokeWidth="2.2" />
+                {/* blank ruled pages */}
+                <path className="art-line" d="M26 46h22" strokeWidth="2" />
+                <path className="art-line" d="M26 56h16" strokeWidth="2" />
+                <path className="art-line" d="M72 46h22" strokeWidth="2" />
+                <path className="art-line" d="M72 56h16" strokeWidth="2" />
+                {/* accent plus, floating clear of the book */}
+                <circle className="art-plus-bg" cx="60" cy="16" r="13" strokeWidth="1.8" />
+                <path className="art-plus" d="M60 10v12M54 16h12" strokeWidth="2.6" />
+              </g>
+            </svg>
+          </div>
+          <div className="empty-copy">
+            <p className="empty-title">Your book is empty</p>
+            <p className="empty-sub">
+              Add your first contact and keep the people you reach for most in one place.
+            </p>
+            <button type="button" className="empty-action" onClick={() => setAdding(true)}>
+              <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+                <path
+                  d="M12 5v14M5 12h14"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                />
+              </svg>
+              Add your first contact
+            </button>
+          </div>
         </div>
       )}
 
