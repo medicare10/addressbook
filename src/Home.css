@@ -1,0 +1,624 @@
+/* ── Addressbook · home (post-auth) ─────────────────────────────────────── */
+
+.home {
+  --paper: #f6f1e6;
+  --paper-2: #fffdf7;
+  --ink: #17150f;
+  --muted: #736d5f;
+  --accent: #c8452e;
+  --line: #ddd4c1;
+  --sans: 'Archivo', system-ui, sans-serif;
+  --display: 'Fraunces', Georgia, serif;
+
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: clamp(28px, 8vw, 96px);
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
+  text-align: left;
+}
+
+.home-head {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.home-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.home .kicker {
+  margin: 0;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.home h1 {
+  margin: 0;
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: clamp(38px, 6vw, 68px);
+  line-height: 1.02;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+}
+
+.home .sub {
+  margin: 0;
+  max-width: 46ch;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+.home-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.home-signout {
+  width: auto;
+  padding-inline: 20px;
+  flex: none;
+}
+
+.home-add {
+  width: auto;
+  padding-inline: 20px;
+  flex: none;
+  background: var(--ink);
+  color: var(--paper-2);
+}
+
+.home-add:hover:not(:disabled) {
+  background: #000;
+}
+
+/* ── Search ─────────────────────────────────────────────────────────── */
+
+.search {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.search-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.search-control {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 14px;
+  background: var(--paper-2);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  transition: border-color 160ms ease, box-shadow 160ms ease;
+}
+
+.search-control:focus-within {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(200, 69, 46, 0.14);
+}
+
+.search-icon {
+  flex: none;
+  color: var(--muted);
+}
+
+.search-control input {
+  flex: 1;
+  min-width: 0;
+  padding: 14px 0;
+  border: none;
+  background: transparent;
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 16px;
+  outline: none;
+}
+
+.search-control input::placeholder {
+  color: var(--muted);
+  opacity: 0.7;
+}
+
+.search-control input::-webkit-search-cancel-button {
+  display: none;
+}
+
+.search-clear {
+  flex: none;
+  border: none;
+  background: transparent;
+  color: var(--accent);
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 6px;
+}
+
+.search-clear:hover {
+  background: rgba(200, 69, 46, 0.1);
+}
+
+.search-count {
+  font-size: 13px;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── Contact list ───────────────────────────────────────────────────── */
+
+.contact-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--line);
+}
+
+.contact-row {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 4px;
+  border: none;
+  border-bottom: 1px solid var(--line);
+  background: none;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  animation: row-in 260ms ease both;
+  transition: background 140ms ease;
+}
+
+.contact-row:hover,
+.contact-row:focus-visible {
+  background: rgba(23, 21, 15, 0.04);
+}
+
+.contact-chevron {
+  margin-left: auto;
+  color: var(--muted);
+}
+
+.contact-initial {
+  flex: none;
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: rgba(200, 69, 46, 0.12);
+  color: var(--accent);
+  font-family: var(--display);
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.contact-name {
+  font-size: 17px;
+  color: var(--ink);
+  overflow-wrap: anywhere;
+}
+
+.contact-list .skeleton {
+  pointer-events: none;
+}
+
+.contact-name-skel {
+  display: block;
+  height: 14px;
+  width: 42%;
+  border-radius: 7px;
+  background: linear-gradient(
+    90deg,
+    rgba(23, 21, 15, 0.07),
+    rgba(23, 21, 15, 0.13),
+    rgba(23, 21, 15, 0.07)
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.3s linear infinite;
+}
+
+/* ── States ─────────────────────────────────────────────────────────── */
+
+.contact-state {
+  padding: 28px 4px;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.contact-state p {
+  margin: 0;
+  font-size: 16px;
+}
+
+.contact-state.error p {
+  color: var(--accent);
+}
+
+.btn.retry {
+  width: auto;
+  padding-inline: 20px;
+  flex: none;
+}
+
+@keyframes shimmer {
+  from {
+    background-position: 200% 0;
+  }
+  to {
+    background-position: -200% 0;
+  }
+}
+
+@keyframes row-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ── Detail card ────────────────────────────────────────────────────── */
+
+.card-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(23, 21, 15, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  animation: fade-in 180ms ease both;
+}
+
+.detail-card {
+  position: relative;
+  background: var(--paper-2);
+  border-radius: 14px;
+  padding: 32px;
+  width: 100%;
+  max-width: 420px;
+  box-shadow: 0 20px 50px rgba(23, 21, 15, 0.3);
+  animation: pop-in 220ms cubic-bezier(0.2, 0, 0, 1) both;
+}
+
+.card-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  border: none;
+  background: none;
+  color: var(--muted);
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 8px;
+  display: flex;
+}
+
+.card-close:hover {
+  background: rgba(23, 21, 15, 0.06);
+  color: var(--ink);
+}
+
+.card-tab {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: rgba(200, 69, 46, 0.14);
+  color: var(--accent);
+  font-family: var(--display);
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.card-name {
+  margin: 16px 0 20px;
+  font-family: var(--display);
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.1;
+}
+
+.card-fields {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.card-fields dt {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+
+.card-fields dd {
+  margin: 0;
+  font-size: 16px;
+  color: var(--ink);
+  overflow-wrap: anywhere;
+}
+
+.map-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  color: var(--accent);
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: 1px solid currentColor;
+  padding-bottom: 1px;
+}
+
+.map-link:hover {
+  color: var(--accent-deep, #a63824);
+}
+
+.card-actions {
+  margin-top: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.card-edit {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color 160ms ease, background 160ms ease;
+}
+
+.card-edit:hover {
+  border-color: var(--accent);
+  background: rgba(200, 69, 46, 0.06);
+}
+
+.card-delete {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--muted);
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: color 160ms ease, border-color 160ms ease, background 160ms ease;
+}
+
+.card-delete:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+  background: rgba(200, 69, 46, 0.06);
+}
+
+.card-delete-confirm {
+  padding: 14px 16px;
+  border: 1px solid var(--accent);
+  border-radius: 8px;
+  background: rgba(200, 69, 46, 0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.card-delete-text {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--ink);
+}
+
+.card-delete-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.card-delete-yes {
+  flex: 1;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  background: var(--accent);
+  color: var(--paper-2);
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 160ms ease;
+}
+
+.card-delete-yes:hover:not(:disabled) {
+  background: #a63824;
+}
+
+.card-delete-yes:disabled {
+  opacity: 0.7;
+  cursor: default;
+}
+
+.card-delete-confirm .card-cancel {
+  flex: 1;
+  padding: 10px 16px;
+}
+
+/* ── Card form (add / edit) ─────────────────────────────────────────── */
+
+.card-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.card-form .field {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.card-form .field-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.card-form input,
+.card-form textarea {
+  width: 100%;
+  padding: 11px 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--paper-2);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 15px;
+  line-height: 1.45;
+  resize: vertical;
+  transition: border-color 160ms ease, box-shadow 160ms ease;
+}
+
+.card-form input::placeholder,
+.card-form textarea::placeholder {
+  color: var(--muted);
+}
+
+.card-form input:focus,
+.card-form textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(200, 69, 46, 0.14);
+}
+
+.card-form .field-hint {
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+.form-error {
+  margin: 0;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: rgba(200, 69, 46, 0.1);
+  color: var(--accent);
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.card-form-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.card-save {
+  width: auto;
+  flex: 1;
+  padding: 13px 18px;
+  border-radius: 8px;
+}
+
+.card-cancel {
+  flex: none;
+  padding: 13px 18px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--muted);
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: color 160ms ease, border-color 160ms ease;
+}
+
+.card-cancel:hover:not(:disabled) {
+  color: var(--ink);
+  border-color: var(--ink);
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes pop-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card-overlay,
+  .detail-card {
+    animation: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .contact-row,
+  .contact-name-skel {
+    animation: none;
+  }
+}
